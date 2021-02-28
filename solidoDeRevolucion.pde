@@ -1,12 +1,12 @@
 ArrayList<Point> points;
 PShape solid;
 
-boolean bool = true;
+boolean bool = true, sdr = true;
 
 float sigma = PI/8;
 int z;
 int zoom = 0;
-PShape var, gr;
+PShape var;
 
 
 void setup() {
@@ -41,10 +41,13 @@ void draw() {
     background(0);
     textSize(16);
     fill(255);
-    text("\"Retroceso\" para volver a empezar", width-205, height-10);
+    text("\"Retroceso\" para volver a empezar", width-285, height-10);
     text("Zoom In:   +", width-130, 20);
     text("Zoom Out:  -",width-130, 50);
-    displayRevolution();
+    if (sdr) genRevolution();
+    translate(-width/2, -height/2,0);
+    translate(mouseX, mouseY,-1000 + zoom);
+    shape(var);
   }
 }
 
@@ -67,7 +70,7 @@ String hist(){
   return str;
 }
 
-void displayRevolution() {
+void genRevolution() {
   var = createShape();
   var.beginShape(TRIANGLE_STRIP);
   var.stroke(255, 0, 0, 255);
@@ -80,9 +83,7 @@ void displayRevolution() {
     }
   }
   var.endShape();
-  translate(-width/2, -height/2,0);
-  translate(mouseX, mouseY,-1000 + zoom);
-  shape(var);
+  sdr = false;
 }
 
 void mouseClicked() {
@@ -100,6 +101,7 @@ void keyPressed() {
   if (keyCode == BACKSPACE) {
     points = new ArrayList<Point>();
     bool = true;
+    sdr = true;
   }
   if (key == '+'){
     zoom += 100;
