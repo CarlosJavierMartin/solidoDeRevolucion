@@ -4,12 +4,19 @@ PShape solid;
 boolean bool = true;
 
 float sigma = PI/8;
-
+int z;
+int zoom = 0;
 PShape var, gr;
+
+import gifAnimation.*;
+
+GifMaker gifExport;
 
 void setup() {
   size(1080, 640, P3D);
   points = new ArrayList<Point>();
+  gifExport = new GifMaker(this, "sdr.gif");
+  gifExport.setRepeat(0);  
 }
 
 void draw() {
@@ -37,12 +44,15 @@ void draw() {
     displayMiddleLine();
   } else {
     background(0);
-    textSize(12);
+    textSize(16);
     fill(255);
-    text("\"Retroceso\" para volver a empezar", width-205, height-5);
-
+    text("\"Retroceso\" para volver a empezar", width-205, height-10);
+    text("Zoom In:   +", width-130, 20);
+    text("Zoom Out:  -",width-130, 50);
     displayRevolution();
   }
+ gifExport.setDelay(1);
+ gifExport.addFrame();
 }
 
 void displayMiddleLine() {
@@ -71,14 +81,14 @@ void displayRevolution() {
   var.strokeWeight(3);
   var.fill(255, 255, 255, 255);
   for (int i = 0; i < points.size()-1; i++) {
-    for (int iter = 0; iter < (360/degrees(sigma)); iter++) {
-      var.vertex((width/2)+(int)((float)(points.get(i).getX()-(width/2)) * cos((float)sigma*iter)), points.get(i).getY(), 0);
-      var.vertex((width/2)+(int)((float)(points.get(i+1).getX()-(width/2)) * cos((float)sigma*(iter))), points.get(i+1).getY(), 0);
+    for (int iter = 0; iter <= (360/degrees(sigma)); iter++) {
+      var.vertex((width/2)+(int)((float)(points.get(i).getX()-(width/2)) * cos((float)sigma*iter)), points.get(i).getY(),(width/2)+(int)((float)(points.get(i).getX()-(width/2)) * sin((float)sigma*iter)));
+      var.vertex((width/2)+(int)((float)(points.get(i+1).getX()-(width/2)) * cos((float)sigma*(iter))), points.get(i+1).getY(),(width/2)+(int)((float)(points.get(i+1).getX()-(width/2)) * sin((float)sigma*(iter))));
     }
   }
   var.endShape();
-  translate(-width/2, -height/2);
-  translate(mouseX, mouseY);
+  translate(-width/2, -height/2,0);
+  translate(mouseX, mouseY,-1000 + zoom);
   shape(var);
 }
 
@@ -101,6 +111,13 @@ void keyPressed() {
     points = new ArrayList<Point>();
     bool = true;
   }
+  if (key == '+'){
+    zoom += 100;
+  }
+  if (key == '-'){
+    zoom -= 100;
+  }
+  if (keyCode == UP)  gifExport.finish();  
 }
 
 class Point {
