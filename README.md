@@ -15,6 +15,9 @@ Decisiones de código:
 Resultado:
 
 ![error](https://github.com/CarlosJavierMartin/solidoDeRevolucion/blob/master/sdr.gif?raw=true)
+Acciones realizadas:
+ - Creacion de varias figuras y visionado de seguimiento de puntos. Eliminacion de los mismos
+ - Visionado de distintas figuras de revolucion, zoom in y zoom out 
 
 Referencias:
   - Recursos de programación:
