@@ -89,9 +89,6 @@ void mouseClicked() {
   if (mouseX >= width/2 && bool) {
     Point l = new Point(mouseX, mouseY);
     points.add(l);
-    for (int i = 0; i < points.size(); i++) {
-      System.out.println("X: " +points.get(i).getX()+ " | Y:" + points.get(i).getY());
-    }
   }
 }
 
