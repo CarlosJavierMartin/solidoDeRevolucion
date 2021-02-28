@@ -8,15 +8,10 @@ int z;
 int zoom = 0;
 PShape var, gr;
 
-import gifAnimation.*;
-
-GifMaker gifExport;
 
 void setup() {
   size(1080, 640, P3D);
   points = new ArrayList<Point>();
-  gifExport = new GifMaker(this, "sdr.gif");
-  gifExport.setRepeat(0);  
 }
 
 void draw() {
@@ -51,8 +46,6 @@ void draw() {
     text("Zoom Out:  -",width-130, 50);
     displayRevolution();
   }
- gifExport.setDelay(1);
- gifExport.addFrame();
 }
 
 void displayMiddleLine() {
@@ -117,7 +110,6 @@ void keyPressed() {
   if (key == '-'){
     zoom -= 100;
   }
-  if (keyCode == UP)  gifExport.finish();  
 }
 
 class Point {
